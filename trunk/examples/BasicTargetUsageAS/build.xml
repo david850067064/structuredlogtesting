@@ -1,0 +1,57 @@
+<!--
+Copyright (c) 2009 Renaun Erickson (http://renaun.com, http://structuredlogs.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<project name="BasicTargetUsageAS" default="buildDebug">
+	<property file="./build.properties" />
+	<property name="source.dir" location="src" />
+	<property name="dest.dir" location="ant-debug" />
+	
+	<taskdef name="mxmlc" classname="flex.ant.MxmlcTask" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+	
+	<target name="buildRelease">
+		<property name="dest.dir" location="ant-release" />
+		<delete dir="ant-release" />
+		<property name="debug" value="false" />
+		<antcall target="compile"/>
+	</target>
+	
+	<target name="buildDebug">
+		<delete dir="ant-debug" />
+		<property name="debug" value="true" />
+		<antcall target="compile"/>
+	</target>
+
+	<target name="compile" depends="">
+		<mxmlc file="${source.dir}/BasicTargetUsageAS.as" 
+			   output="${dest.dir}/BasicTargetUsageAS.swf"
+			   actionscript-file-encoding="UTF-8" 
+			   debug="${debug}" 
+			   optimize="true"
+			   incremental="true">		
+
+			<source-path path-element="${source.dir}/" />
+
+			<compiler.library-path dir="${LIB_DIR}" append="true">
+				<include name="bin" />
+			</compiler.library-path>			
+		</mxmlc>
+	</target>
+</project>
