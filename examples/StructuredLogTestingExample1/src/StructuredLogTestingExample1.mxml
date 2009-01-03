@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:targets="com.structuredlogs.targets.*"
+	layout="vertical">
+	
+	<targets:StructuredLogTarget identifier="{txtIdentifier.text}"/>
+	
+	<mx:Script>
+		<![CDATA[
+			private var count:int = 0;
+			
+		]]>
+	</mx:Script>
+	<mx:TextInput id="txtIdentifier" width="200" text="myIdentifier" />
+	<mx:Button label="Click For Simple Debug Statement" click="count++;SLog.debug(event.target, 'Hi there')" />
+	<mx:Button label="Click For TestPoint Statement" click="count++;SLog.test(event.target, 'ClickCount', {count: count, random:int(Math.random()*10)})" />
+</mx:Application>
