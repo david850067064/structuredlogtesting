@@ -1,0 +1,15 @@
+===== StructuredLogTestingSDK Examples =====
+
+Projects do not include FlexBuilder project files.  There might be
+a build.xml and build.properties file provided for some projects.
+
+You should be able to tell what kind of project each example is by
+looking for file with the example's name, ie: *.mxml files (Flex), 
+*.mxml with a *.xml file (AIR), or just a *.as (ActionScript).  
+
+Here is a list for reference:
+
+BasicSLogViewerAIR - AIR project
+BasicTargetUsageAS - ActionScript project
+BasicTargetUsageFlex - Flex project
+StructuredLogTestingExample1 - Flex project
