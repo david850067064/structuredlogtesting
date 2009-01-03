@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+	creationComplete="init()" xmlns:connection="com.structuredlogs.connection.*">
+	
+	<connection:SLogLocalConnection id="slogConn" update="updateHandler(event)" />
+	
+	<mx:Script>
+		<![CDATA[
+			import com.structuredlogs.data.StructuredLog;
+			import com.structuredlogs.events.LogHandlerEvent;
+			
+			/**
+			 * 	Display the latest logs on top.
+			 */
+			private function updateHandler(event:LogHandlerEvent):void
+			{
+				var prefix:String = "[" + event.identifier + "]";
+				for each(var log:StructuredLog in event.messages)
+				{
+					var msg:String = log.getDisplayText(true, true);
+					txtOutput.text = prefix + msg + "\n" + txtOutput.text
+				}
+			}
+			
+			private function start():void
+			{
+				if (btnStart.selected)
+				{
+					slogConn.start();
+					txtOutput.text += "START CONNECTION\n";
+				}
+				else
+				{
+					slogConn.stop();
+					txtOutput.text += "STOP CONNECTION\n";
+				}
+			}
+		]]>
+	</mx:Script>
+	<mx:Button id="btnStart" label="{btnStart.selected ? 'Stop' : 'Start'}"
+		toggle="true" click="start()" />
+	<mx:TextArea id="txtOutput"
+		top="22" 
+		width="100%" height="100%" />
+</mx:WindowedApplication>
