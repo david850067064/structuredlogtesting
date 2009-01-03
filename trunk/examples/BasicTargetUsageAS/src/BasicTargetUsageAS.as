@@ -23,8 +23,6 @@ THE SOFTWARE.
 
 package {
 	
-import com.structuredlogs.targets.LogHistoryTarget;
-import com.structuredlogs.targets.TraceTarget;
 
 import flash.display.MovieClip;
 import flash.display.Sprite;
@@ -46,10 +44,11 @@ public class BasicTargetUsageAS extends Sprite
 	}
 	
 	private var textfield:TextField;
-	private var logHistoryTarget:LogHistoryTarget;
+	//private var logHistoryTarget:LogHistoryTarget;
 	
 	private function setupTargets():void
 	{
+		/*
 		var traceTarget:TraceTarget = new TraceTarget();
 		traceTarget.includeCategory = true;
 		traceTarget.includeDate = true;
@@ -66,6 +65,7 @@ public class BasicTargetUsageAS extends Sprite
 		SLog.addTarget(traceTarget);
 		SLog.addTarget(logHistoryTarget);
 		SLog.debug(BasicTargetUsageAS, "You should see this message in the console");
+		*/
 	}
 	
 	private function setupUI():void
@@ -101,8 +101,8 @@ public class BasicTargetUsageAS extends Sprite
 	 */
 	private function mouseDownHandler(event:MouseEvent):void
 	{
-		SLog.debug(event.currentTarget, "Target's values: " + event.localX + "," + event.localY); 
-		textfield.text = logHistoryTarget.toString();
+		//SLog.debug(event.currentTarget, "Target's values: " + event.localX + "," + event.localY); 
+		//textfield.text = logHistoryTarget.toString();
 	}
 }
 }
