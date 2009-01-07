@@ -94,7 +94,7 @@ dynamic public class TestPoint
 				key == "tpdesc" ||
 				key == "tpcat")
 				continue;
-			str += "\n" + key + ": " + this[key];
+			str += "\n" + key + ": " + this[key].toString();
 		}		
 		return header + str;
 	}
