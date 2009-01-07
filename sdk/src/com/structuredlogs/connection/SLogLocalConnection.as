@@ -123,7 +123,7 @@ public class SLogLocalConnection extends EventDispatcher
     }
 
 	/**
-	 * 	Method called by StructuredLogTarget to receive messages from SLog.
+	 * 	LocalConnection method called by StructuredLogTarget to receive messages from SLog.
 	 */
     public function logHandler(message:ByteArray, identifier:String):void
     { 

@@ -34,6 +34,8 @@ USAGE:
 */
 package com.structuredlogs.utils
 {
+	import flash.utils.describeType;
+	
 
 
 public class JSON 
@@ -56,89 +58,218 @@ public class JSON
 	/**
 	 * 	Encode into JSON object formated string. 
 	 */
-    public function encode(object:*):String 
+    public function encode(value:*):String 
     {
-        var i:int = 0;
-        var str:String = "";
-        var tmp:String;
-
-        switch (typeof object) 
-        {
-        	case "object":
-	            if (object) {
-	                if (object is Array) {
-	                    for (i = 0; i < object.length; ++i) {
-	                        tmp = encode(object[i]);
-	                        if (str)
-	                            str += ',';
-	                        str += tmp;
-	                    }
-	                    return '[' + str + ']';
-	                } else if (typeof object.toString != 'undefined') {
-	                    for (var key:String in object) {
-	                        var value:* = object[key];
-	                        if (typeof value != 'undefined' && typeof value != 'function') {
-	                            tmp = encode(value);
-	                            if (str) {
-	                                str += ',';
-	                            }
-	                            str += encode(key) + ':' + tmp;
-	                        }
-	                    }
-	                    return '{' + str + '}';
-	                }
-	            }
-            	return 'null';
-            break;
-        	case 'number':
-				return isFinite(object) ? String(object) : 'null';
-			break;
-	        case 'string':
-	            var len:int = object.length;
-	            str = '"';
-	            var char:String;
-	            for (i = 0; i < len; i++) {
-	                char = object.charAt(i);
-	                if (char >= ' ') {
-	                    if (char == '\\' || char == '"') {
-	                        str += '\\';
-	                    }
-	                    str += char;
-	                } else {
-	                    switch (char) {
-	                        case '\b':
-	                            str += '\\b';
-	                            break;
-	                        case '\f':
-	                            str += '\\f';
-	                            break;
-	                        case '\n':
-	                            str += '\\n';
-	                            break;
-	                        case '\r':
-	                            str += '\\r';
-	                            break;
-	                        case '\t':
-	                            str += '\\t';
-	                            break;
-	                        default:
-	                            var charCode:Number = char.charCodeAt();
-	                            str += '\\u00' + Math.floor(charCode / 16).toString(16) +
-	                                (charCode % 16).toString(16);
-	                    }
-	                }
-	            }
-	            return str + '"';
-			break;
-	        case 'boolean':
-	            return String(object);
-			break;
-	        default:
-	            return "null";
-			break;
+        // determine what value is and convert it based on it's type
+        if ( value is String ) {
+			// escape the string so it's formatted correctly
+			return escapeString( value as String );
+        } else if ( value is Number ) {
+			// only encode numbers that finate
+			return isFinite( value as Number) ? value.toString() : "null";
+		} else if ( value is Boolean ) {
+			// convert boolean to string easily
+			return value ? "true" : "false";
+		} else if ( value is Array ) {
+			// call the helper method to convert an array
+			return arrayToString( value as Array );
+        } else if ( value is Object && value != null ) {
+			// call the helper method to convert an object
+			return objectToString( value );
         }
-        return "null";
+		return "null";
     }
+    
+    /**
+     * Escapes a string accoding to the JSON specification.
+     *
+     * @param str The string to be escaped
+     * @return The string with escaped special characters
+     *              according to the JSON specification
+     */
+    private function escapeString( str:String ):String 
+    {
+		// create a string to store the string's jsonstring value
+		var s:String = "";
+		// current character in the string we're processing
+		var ch:String;
+		// store the length in a local variable to reduce lookups
+		var len:Number = str.length;
+		
+		// loop over all of the characters in the string
+		for ( var i:int = 0; i < len; i++ ) {
+		
+			    // examine the character to determine if we have to escape it
+			    ch = str.charAt( i );
+			    switch ( ch ) {
+			    
+					case '"':       // quotation mark
+						    s += "\\\"";
+						    break;
+						    
+					//case '/':     // solidus
+					//      s += "\\/";
+					//      break;
+						    
+					case '\\':      // reverse solidus
+						    s += "\\\\";
+						    break;
+						    
+					case '\b':      // bell
+						    s += "\\b";
+						    break;
+						    
+					case '\f':      // form feed
+						    s += "\\f";
+						    break;
+						    
+					case '\n':      // newline
+						    s += "\\n";
+						    break;
+						    
+					case '\r':      // carriage return
+						    s += "\\r";
+						    break;
+						    
+					case '\t':      // horizontal tab
+						    s += "\\t";
+						    break;
+						    
+					default:        // everything else
+						    
+						    // check for a control character and escape as unicode
+						    if ( ch < ' ' ) {
+								// get the hex digit(s) of the character (either 1 or 2 digits)
+								var hexCode:String = ch.charCodeAt( 0 ).toString( 16 );
+								
+								// ensure that there are 4 digits by adjusting
+								// the # of zeros accordingly.
+								var zeroPad:String = hexCode.length == 2 ? "00" : "000";
+								
+								// create the unicode escape sequence with 4 hex digits
+								s += "\\u" + zeroPad + hexCode;
+						    } else {
+						    
+								// no need to do any special encoding, just pass-through
+								s += ch;
+								
+						    }
+			    }       // end switch
+			    
+		}       // end for loop
+						    
+		return "\"" + s + "\"";
+    }
+    
+    /**
+     * Converts an array to it's JSON string equivalent
+     *
+     * @param a The array to convert
+     * @return The JSON string representation of <code>a</code>
+     */
+    private function arrayToString( a:Array ):String {
+		// create a string to store the array's jsonstring value
+		var s:String = "";
+		
+		// loop over the elements in the array and add their converted
+		// values to the string
+		for ( var i:int = 0; i < a.length; i++ ) {
+			    // when the length is 0 we're adding the first element so
+			    // no comma is necessary
+			    if ( s.length > 0 ) {
+					// we've already added an element, so add the comma separator
+					s += ","
+			    }
+			    
+			    // convert the value to a string
+			    s += encode( a[i] );   
+		}
+		
+		// KNOWN ISSUE:  In ActionScript, Arrays can also be associative
+		// objects and you can put anything in them, ie:
+		//		  myArray["foo"] = "bar";
+		//
+		// These properties aren't picked up in the for loop above because
+		// the properties don't correspond to indexes.  However, we're
+		// sort of out luck because the JSON specification doesn't allow
+		// these types of array properties.
+		//
+		// So, if the array was also used as an associative object, there
+		// may be some values in the array that don't get properly encoded.
+		//
+		// A possible solution is to instead encode the Array as an Object
+		// but then it won't get decoded correctly (and won't be an
+		// Array instance)
+						    
+		// close the array and return it's string value
+		return "[" + s + "]";
+    }
+    
+    /**
+     * Converts an object to it's JSON string equivalent
+     *
+     * @param o The object to convert
+     * @return The JSON string representation of <code>o</code>
+     */
+    private function objectToString( o:Object ):String
+    {
+		// create a string to store the object's jsonstring value
+		var s:String = "";
+		
+		// determine if o is a class instance or a plain object
+		var classInfo:XML = describeType( o );
+		if ( classInfo.@name.toString() == "Object" )
+		{
+			    // the value of o[key] in the loop below - store this 
+			    // as a variable so we don't have to keep looking up o[key]
+			    // when testing for valid values to convert
+			    var value:Object;
+			    
+			    // loop over the keys in the object and add their converted
+			    // values to the string
+			    for ( var key:String in o )
+			    {
+					// assign value to a variable for quick lookup
+					value = o[key];
+					
+					// don't add function's to the JSON string
+					if ( value is Function )
+					{
+						    // skip this key and try another
+						    continue;
+					}
+					
+					// when the length is 0 we're adding the first item so
+					// no comma is necessary
+					if ( s.length > 0 ) {
+						    // we've already added an item, so add the comma separator
+						    s += ","
+					}
+					
+					s += escapeString( key ) + ":" + encode( value );
+			    }
+		}
+		else // o is a class instance
+		{
+			    // Loop over all of the variables and accessors in the class and 
+			    // serialize them along with their values.
+			    for each ( var v:XML in classInfo..*.( name() == "variable" || name() == "accessor" ) )
+			    {
+					// When the length is 0 we're adding the first item so
+					// no comma is necessary
+					if ( s.length > 0 ) {
+						    // We've already added an item, so add the comma separator
+						    s += ","
+					}
+					
+					s += escapeString( v.@name.toString() ) + ":" + encode( o[ v.@name ] );
+			    }
+			    
+		}
+		
+		return "{" + s + "}";
+    }
+
     
     /**
      *	Loop through whitespace 
@@ -149,48 +280,48 @@ public class JSON
         {
             if (currentCharacter <= " ") 
             {
-                next();
+				next();
             } 
             else if (currentCharacter == '/') 
             {
-                switch (next()) 
-                {
-                    case "/":
-                        while (next() && currentCharacter != '\n' && currentCharacter != '\r') {}
-                        break;
-                    case "*":
-                        next();
-                        for (;;) 
-                        {
-                            if (currentCharacter) 
-                            {
-                                if (currentCharacter == '*') 
-                                {
-                                    if (next() == '/') 
-                                    {
-                                        next();
-                                        break;
-                                    }
-                                } 
-                                else 
-                                {
-                                    next();
-                                }
-                            } 
-                            else 
-                            {
-                                error("Unterminated comment");
-                            }
-                        }
-                        break;
-					default:
-                        error("Syntax error");
-					break;
-                }
+				switch (next()) 
+				{
+				    case "/":
+				        while (next() && currentCharacter != '\n' && currentCharacter != '\r') {}
+				        break;
+				    case "*":
+				        next();
+				        for (;;) 
+				        {
+				            if (currentCharacter) 
+				            {
+							if (currentCharacter == '*') 
+							{
+							    if (next() == '/') 
+							    {
+							        next();
+							        break;
+							    }
+							} 
+							else 
+							{
+							    next();
+							}
+				            } 
+				            else 
+				            {
+							error("Unterminated comment");
+				            }
+				        }
+				        break;
+						default:
+				        error("Syntax error");
+						break;
+				}
             } 
             else 
             {
-                break;
+				break;
             }
         }
     }
@@ -228,55 +359,55 @@ public class JSON
         {
             while (next()) 
             {
-                if (currentCharacter == '"') 
-                {
-					next();
-					return str;
-                } 
-                else if (currentCharacter == '\\') 
-                {
-                    switch (next()) 
-                    {
-                        case 'b':
-                            str += '\b';
-						break;
-                        case 'f':
-                            str += '\f';
-						break;
-                        case 'n':
-                            str += '\n';
-						break;
-                        case 'r':
-                            str += '\r';
-						break;
-                        case 't':
-                            str += '\t';
-						break;
-                        case 'u':
-                            var u:int = 0;
-                            var t:int = 0;
-                            for (var i:int = 0; i < 4; i++) {
-                                t = parseInt(next(), 16);
-                                if (!isFinite(t)) {
-                                    outer = true;
-                                    break;
-                                }
-                                u = u * 16 + t;
-                            }
-                            if(outer) {
-                                outer = false;
-                                break;
-                            }
-                            str += String.fromCharCode(u);
-						break;
-                        default:
-                            str += currentCharacter;
-						break;
-						
-                    }
-                } else {
-                    str += currentCharacter;
-                }
+				if (currentCharacter == '"') 
+				{
+						next();
+						return str;
+				} 
+				else if (currentCharacter == '\\') 
+				{
+				    switch (next()) 
+				    {
+				        case 'b':
+				            str += '\b';
+							break;
+				        case 'f':
+				            str += '\f';
+							break;
+				        case 'n':
+				            str += '\n';
+							break;
+				        case 'r':
+				            str += '\r';
+							break;
+				        case 't':
+				            str += '\t';
+							break;
+				        case 'u':
+				            var u:int = 0;
+				            var t:int = 0;
+				            for (var i:int = 0; i < 4; i++) {
+							t = parseInt(next(), 16);
+							if (!isFinite(t)) {
+							    outer = true;
+							    break;
+							}
+							u = u * 16 + t;
+				            }
+				            if(outer) {
+							outer = false;
+							break;
+				            }
+				            str += String.fromCharCode(u);
+							break;
+				        default:
+				            str += currentCharacter;
+							break;
+							
+				    }
+				} else {
+				    str += currentCharacter;
+				}
             }
         }
         error("Bad string");
@@ -296,20 +427,20 @@ public class JSON
             next();
             white();
             if (currentCharacter == ']') {
-                next();
-                return array;
+				next();
+				return array;
             }
             while (currentCharacter) {
-                array.push(value());
-                white();
-                if (currentCharacter == ']') {
-                    next();
-                    return array;
-                } else if (currentCharacter != ',') {
-                    break;
-                }
-                next();
-                white();
+				array.push(value());
+				white();
+				if (currentCharacter == ']') {
+				    next();
+				    return array;
+				} else if (currentCharacter != ',') {
+				    break;
+				}
+				next();
+				white();
             }
         }
         error("Bad array");
@@ -330,26 +461,26 @@ public class JSON
             next();
             white();
             if (currentCharacter == '}') {
-                next();
-                return obj;
+				next();
+				return obj;
             }
             while (currentCharacter) {
-                var k:String = getString();
-                white();
-                if (currentCharacter != ':') {
-                    break;
-                }
-                next();
-                obj[k] = value();
-                white();
-                if (currentCharacter == '}') {
-                    next();
-                    return obj;
-                } else if (currentCharacter != ',') {
-                    break;
-                }
-                next();
-                white();
+				var k:String = getString();
+				white();
+				if (currentCharacter != ':') {
+				    break;
+				}
+				next();
+				obj[k] = value();
+				white();
+				if (currentCharacter == '}') {
+				    next();
+				    return obj;
+				} else if (currentCharacter != ',') {
+				    break;
+				}
+				next();
+				white();
             }
         }
         error("Bad object");
@@ -378,20 +509,20 @@ public class JSON
             n += '.';
             next();
             while (currentCharacter >= '0' && currentCharacter <= '9') {
-                n += currentCharacter;
-                next();
+				n += currentCharacter;
+				next();
             }
         }
         if (currentCharacter == 'e' || currentCharacter == 'E') {
             n += currentCharacter;
             next();
             if (currentCharacter == '-' || currentCharacter == '+') {
-                n += currentCharacter;
-                next();
+				n += currentCharacter;
+				next();
             }
             while (currentCharacter >= '0' && currentCharacter <= '9') {
-                n += currentCharacter;
-                next();
+				n += currentCharacter;
+				next();
             }
         }
         ret = Number(n);
@@ -434,18 +565,18 @@ public class JSON
 	            return getNumber();
 			break;
 	        case 't':
-                if (next() == 'r' && next() == 'u' &&
-                        next() == 'e') {
-                    next();
-                    return true;
-                }	        
+			if (next() == 'r' && next() == 'u' &&
+			        next() == 'e') {
+			    next();
+			    return true;
+			}	        
 			break;
 	        case 'f':
-                if (next() == 'a' && next() == 'l' &&
-                        next() == 's' && next() == 'e') {
-                    next();
-                    return false;
-                }	        
+			if (next() == 'a' && next() == 'l' &&
+			        next() == 's' && next() == 'e') {
+			    next();
+			    return false;
+			}	        
 			break;
 	        default:
 	            return null;
