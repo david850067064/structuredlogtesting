@@ -67,11 +67,6 @@ public class SLog
 	//--------------------------------------------------------------------------	
 	
 	/**
-	 * 	A log level that defines this messages as a Structured Log statement.
-	 */
-	public static const TESTPOINT_LEVEL:int = 30;
-	
-	/**
 	 * 	Command to tell SLog to reset TestPoint scripts.
 	 */
 	public static const TESTPOINT_RESET:String = "testResetScripts";

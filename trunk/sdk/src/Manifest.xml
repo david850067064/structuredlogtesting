@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- Manifest.xml -->
+<componentPackage>
+    <component id="SLog" class="SLog"/>
+    <component id="SLogLogger" class="com.structuredlogs.SLogLogger"/>
+    <component id="SLogLocalConnection" class="com.structuredlogs.connection.SLogLocalConnection"/>
+	<component id="StructuredLog" class="com.structuredlogs.data.StructuredLog"/>
+    <component id="TestPoint" class="com.structuredlogs.data.TestPoint"/>
+    <component id="LogHandlerEvent" class="com.structuredlogs.events.LogHandlerEvent"/>
+    <component id="SLogEvent" class="com.structuredlogs.events.SLogEvent"/>
+    <component id="SLogEventLevel" class="com.structuredlogs.events.SLogEventLevel"/>
+    <component id="BaseTarget" class="com.structuredlogs.targets.BaseTarget"/>
+    <component id="LineFormattedTarget" class="com.structuredlogs.targets.LineFormattedTarget"/>
+    <component id="LogHistoryTarget" class="com.structuredlogs.targets.LogHistoryTarget"/>
+    <component id="RemoteSLogTarget" class="com.structuredlogs.targets.RemoteSLogTarget"/>
+    <component id="StructuredLogTarget" class="com.structuredlogs.targets.StructuredLogTarget"/>
+    <component id="TraceTarget" class="com.structuredlogs.targets.TraceTarget"/>
+    <component id="JSON" class="com.structuredlogs.utils.JSON"/>
+</componentPackage>
