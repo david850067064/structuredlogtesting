@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:structuredlogs="http://structuredlogs.com/sdk/"
+	creationComplete="appReady()"
+	layout="vertical" >
+<!-- STEP 1: Add log target to application  
+<structuredlogs:StructuredLogTarget
+	identifier="OlympicPool" />
+-->
+
+<!-- STEP 8: Adding remote logger target to capture end user data. 
+<structuredlogs:RemoteSLogTarget
+	id="remoteTarget" identifier="OlypmicPool"
+	 />
+-->	 
+	<mx:Script>
+		<![CDATA[
+			import com.structuredlogs.data.StructuredLogCommand;
+			import olympics.Swimmer;
+			import olympics.Pool;
+
+			/* STEP 2: Create Pool
+			[Bindable]
+			protected var pool:Pool;
+			*/
+
+			private function appReady():void
+			{
+				/* STEP 1: Verify log statements going out on StructuredLogTarget 
+				SLog.info(OlympicSwimmingRace, "Olympic Swimming Race is Alive!");
+				
+				/* STEP 2: Reset Scripts
+				SLog.test(OlympicSwimmingRace, StructuredLogCommand.SLOG_RESET_SCRIPTS,{});
+				*/
+				/* STEP 7: Log send to tell SLog to load saved scripts, FULL PATH BECAUSE SLogApp doesn't know where the TestPoint files reside
+				SLog.test(OlympicSwimmingRace, StructuredLogCommand.SLOG_LOAD_SCRIPT, 
+					{fileName: "/Users/renaun/Documents/workspaces/LoggerStuff/TestDriverExample/src/tpscripts/swim1.tp"});
+				SLog.test(OlympicSwimmingRace, StructuredLogCommand.SLOG_LOAD_SCRIPT, 
+					{fileName: "/Users/renaun/Documents/workspaces/LoggerStuff/TestDriverExample/src/tpscripts/swim2.tp"});
+				*/				
+			}
+			/* STEP 2: Create Pool
+			private function createPool():void
+			{
+
+				if (pool)
+					removeChild(pool);
+				
+				pool = new Pool(int(poolLanes.text));
+				addChild(pool);
+			}
+			*/
+			/* STEP 4: Add a swimmer 
+			private function addSwimmer():void
+			{
+				pool.addSwimmer(new Swimmer(swimmerName.text));
+			}
+			*/
+			/* STEP 8: Send the log to the remote target 
+			private function sendRemoteLog():void
+			{
+				txtStatus.text = "Sending " + remoteTarget.logHistory.length + " log messages.";
+				remoteTarget.note = txtNote.text;
+				remoteTarget.sendLog(statusHandler);
+			}
+			private function statusHandler(status:String, count:int = 0):void
+			{
+				if (status == RemoteSLogTarget.PROGRESS)
+					txtStatus.text = "Messages remaining " + count + " log messages.";
+				else if (status == RemoteSLogTarget.SUCCESS)
+					txtStatus.text = "Successfully sent all messages.";
+				else
+					txtStatus.text = "There was an error in sending the messages.";
+			}
+			*/
+			
+		]]>
+	</mx:Script>
+	<!-- STEP 2: Create Pool UI
+	<mx:HBox enabled="{pool == null}">
+		<mx:Label text="Pool Lanes" />
+		<mx:TextInput id="poolLanes" width="120" text="3" />
+		<mx:Button label="Create Pool" click="createPool()" />
+	</mx:HBox>
+	-->
+	<!-- STEP 4: Add swimmer UI 
+	<mx:HBox enabled="{pool != null}">
+		<mx:Label text="Swimmer" />
+		<mx:TextInput id="swimmerName" width="120" text="Phelps" />
+		<mx:Button label="Add Swimmer" click="addSwimmer()" />
+	</mx:HBox>
+	-->
+	<!-- STEP 6: Race code 
+	<mx:HBox enabled="{pool != null}">
+		<mx:Button label="Start Race" click="pool.startRace()" />
+	</mx:HBox>
+	-->
+	<!-- STEP 8: Setup button to send remote log data. 
+	<mx:HBox enabled="{pool != null}" width="100%" horizontalAlign="center">
+		<mx:TextInput id="txtNote" width="100%" />
+		<mx:Button label="Submit Bug" click="sendRemoteLog()" />
+		<mx:Label id="txtStatus" width="100%" textAlign="center" />
+	</mx:HBox>
+	-->
+</mx:Application>
