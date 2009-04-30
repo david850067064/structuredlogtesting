@@ -80,6 +80,27 @@ dynamic public class TestPoint
 			clone[key] = this[key];
 		return clone;
 	}
+
+
+	
+	
+	/**
+	 * 	Checks the TestPoint data for equality.  Data points are converted
+	 *  to strings for comparison.
+	 */
+	public function equals(log:TestPoint):Boolean
+	{
+		var isSame:Boolean = true;
+		for (var key:String in this)
+		{
+			if (key == "tpname" ||
+				key == "tpdesc" ||
+				key == "tpcat")
+				continue;
+			isSame = isSame && (log[key]) && (this[key].toString() == log[key].toString());
+		}			
+		return isSame;
+	}
 	
 	/**
 	 * 	String representation of the TestPoint
