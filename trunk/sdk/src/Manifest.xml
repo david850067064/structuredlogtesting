@@ -10,6 +10,7 @@
     <component id="SLogEvent" class="com.structuredlogs.events.SLogEvent"/>
     <component id="SLogEventLevel" class="com.structuredlogs.events.SLogEventLevel"/>
     <component id="BaseTarget" class="com.structuredlogs.targets.BaseTarget"/>
+    <component id="FileTarget" class="com.structuredlogs.targets.FileTarget"/>
     <component id="LineFormattedTarget" class="com.structuredlogs.targets.LineFormattedTarget"/>
     <component id="LogHistoryTarget" class="com.structuredlogs.targets.LogHistoryTarget"/>
     <component id="RemoteSLogTarget" class="com.structuredlogs.targets.RemoteSLogTarget"/>
