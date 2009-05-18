@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+	ADOBE SYSTEMS INCORPORATED
+	Copyright 2008 Adobe Systems Incorporated
+	All Rights Reserved.
+
+	NOTICE: Adobe permits you to use, modify, and distribute this file
+	in accordance with the terms of the license agreement accompanying it.
+
+-->
+
+<!--- The default skin class for a Spark List component. -->
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+	  width="100%" minHeight="16"
+	  xmlns:ns="library://ns.adobe.com/flex/halo"> 
+
+    <fx:Metadata>
+    <![CDATA[ 
+	/** 
+	 * A strongly typed property that references the component to which this skin is applied.
+	 */
+    	[HostComponent("com.structuredlogs.components.CustomDataEditor")]
+    ]]>
+    </fx:Metadata>
+
+	<s:states>
+		<ns:State name="default" />
+		<ns:State name="linkedMode" />
+	</s:states>
+	
+    
+	<!-- layer 8: text -->
+	
+	<s:DropDownList id="operatorDropDown" left="0" width="170" />
+<!--
+	-->
+	<s:Group id="parameterGroup" left="176" right="0" top="0" bottom="0">
+		<s:layout>
+			<s:HorizontalLayout />
+		</s:layout>
+		
+	</s:Group>
+	
+	<s:Group id="linkedGroup"
+		height="60" width="240" y="-20"
+		visible="false" visible.linkedMode="true"
+		includeInLayout="false" includeInLayout.linkedMode="true">
+		<s:layout>
+			<s:BasicLayout />
+		</s:layout>
+
+		<!-- layer 2: fill -->
+		<s:Rect left="1" right="1" top="1" bottom="1" radiusX="2" radiusY="2">
+			<s:fill>
+				<ns:LinearGradient rotation="90">
+					<ns:GradientEntry color="0xBBCCBB" 
+								   alpha="0.85" />
+					<ns:GradientEntry color="0xD8D8D8" 
+								   alpha="0.85" />
+				</ns:LinearGradient>
+			</s:fill>
+		</s:Rect>
+		
+		<!-- layer 3: fill lowlight -->
+		<s:Rect left="1" right="1" bottom="1" height="9" radiusX="2" radiusY="2">
+			<s:fill>
+				<ns:LinearGradient rotation="90">
+					<ns:GradientEntry color="0x000000" alpha="0.0099" />
+					<ns:GradientEntry color="0x000000" alpha="0.0627" />
+				</ns:LinearGradient>
+			</s:fill>
+		</s:Rect>
+		
+	<!-- layer 5: highlight stroke (all states except down) -->
+		<s:Rect left="1" right="1" top="1" bottom="1" radiusX="2" radiusY="2">
+			<s:stroke>
+				<ns:LinearGradientStroke rotation="90" weight="1">
+					<ns:GradientEntry color="0xBBCCBB" />
+					<ns:GradientEntry color="0xD8D8D8" />
+				</ns:LinearGradientStroke>
+			</s:stroke>
+		</s:Rect>
+	
+		<!-- layer 7: border - put on top of the fill so it doesn't disappear when scale is less than 1 -->
+	    <s:Rect left="0" right="0" top="0" bottom="0" width="69" height="20" radiusX="2" radiusY="2">
+	        <s:stroke>
+	            <ns:LinearGradientStroke rotation="90" weight="1">
+	                <ns:GradientEntry color="0x000000" 
+	                               alpha="0.5625" />
+	                <ns:GradientEntry color="0x000000" 
+	                               alpha="0.75"  />
+	            </ns:LinearGradientStroke>
+	        </s:stroke>
+	    </s:Rect>
+	    
+	    <s:SimpleText text="Select a TestPoint" left="6" top="6" right="6" />
+	    <s:DropDownList id="previousAssertions" left="6" top="30" right="6"
+	    	  />
+	    
+		<s:Button id="dataBoxShrinkButton"
+			label="Up" click="hostComponent.closeLinkedMode()"
+			top="6" right="6" width="12" height="12" />
+	    
+	</s:Group>
+	
+</s:SparkSkin>

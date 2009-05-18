@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+	ADOBE SYSTEMS INCORPORATED
+	Copyright 2008 Adobe Systems Incorporated
+	All Rights Reserved.
+
+	NOTICE: Adobe permits you to use, modify, and distribute this file
+	in accordance with the terms of the license agreement accompanying it.
+
+-->
+
+<!--- The default skin class for a Spark List component. -->
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+	  minWidth="112" minHeight="112"
+	  xmlns:ns="library://ns.adobe.com/flex/halo" > 
+
+	<s:states>
+		<ns:State name="default" />
+		<ns:State name="saveMode" />
+	</s:states>
+	<fx:Script>
+		<![CDATA[
+			import spark.layouts.VerticalLayout;
+		]]>
+	</fx:Script>
+	
+	<!-- layer 2: fill -->
+	<s:Rect left="1" right="1" top="1" bottom="1" radiusX="2" radiusY="2">
+		<s:fill>
+			<ns:LinearGradient rotation="90">
+				<ns:GradientEntry color="0x336699" 
+							   alpha="0.85" />
+				<ns:GradientEntry color="0xD8D8D8" 
+							   alpha="0.85" />
+			</ns:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	
+	<!-- layer 3: fill lowlight -->
+	<s:Rect left="1" right="1" bottom="1" height="9" radiusX="2" radiusY="2">
+		<s:fill>
+			<ns:LinearGradient rotation="90">
+				<ns:GradientEntry color="0x000000" alpha="0.0099" />
+				<ns:GradientEntry color="0x000000" alpha="0.0627" />
+			</ns:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	
+<!-- layer 5: highlight stroke (all states except down) -->
+	<s:Rect left="1" right="1" top="1" bottom="1" radiusX="2" radiusY="2">
+		<s:stroke>
+			<ns:LinearGradientStroke rotation="90" weight="1">
+				<ns:GradientEntry color="0x336699" />
+				<ns:GradientEntry color="0xD8D8D8" />
+			</ns:LinearGradientStroke>
+		</s:stroke>
+	</s:Rect>
+
+	<!-- layer 7: border - put on top of the fill so it doesn't disappear when scale is less than 1 -->
+    <s:Rect left="0" right="0" top="0" bottom="0" width="69" height="20" radiusX="2" radiusY="2">
+        <s:stroke>
+            <ns:LinearGradientStroke rotation="90" weight="1">
+                <ns:GradientEntry color="0x000000" 
+                               alpha="0.5625" />
+                <ns:GradientEntry color="0x000000" 
+                               alpha="0.75"  />
+            </ns:LinearGradientStroke>
+        </s:stroke>
+    </s:Rect>
+    
+	<!-- layer 8: text -->
+	<!--- 
+		@copy spark.components.supportClasses.ButtonBase#labelElement
+	-->
+	<s:Group id="group" left="3" right="3" top="4" visible="false" visible.saveMode="true"
+		height="0" height.saveMode="112" includeInLayout="false" includeInLayout.saveMode="true">
+		<s:layout>
+			<s:BasicLayout/>
+		</s:layout>
+		<s:SimpleText text="Name" left="0" width="70" top="7" textAlign="right" />
+		<s:TextInput id="inputName" left="75" right="0" />
+		<s:SimpleText text="Identifier" left="0" width="70" top="37" textAlign="right" />
+		<s:TextInput id="inputIdentifier" left="75" right="0" top="30" />
+		<s:SimpleText text="Description" left="0" width="70" top="67" textAlign="right" />
+		<s:TextInput id="inputDescription" left="75" right="0" top="60" />
+		<s:Button id="saveButton" label="Save Script" right="78" bottom="4" />
+		<s:Button id="cancelButton" label="Cancel" right="0" bottom="4" />
+	</s:Group>
+	
+	<s:List id="assertionList" 
+		top="{group.height+4}" left="3" right="3" bottom="3"
+		width="100%" height="100%" />
+</s:SparkSkin>

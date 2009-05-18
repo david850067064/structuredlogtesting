@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+	ADOBE SYSTEMS INCORPORATED
+	Copyright 2008 Adobe Systems Incorporated
+	All Rights Reserved.
+
+	NOTICE: Adobe permits you to use, modify, and distribute this file
+	in accordance with the terms of the license agreement accompanying it.
+
+-->
+
+<!--- The default skin class for a Spark List component. -->
+<slt:TestPointAssertionRenderer
+	xmlns:slt="http://structuredlogs.com/toolingsdk/" 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:ns="library://ns.adobe.com/flex/halo"
+	  minWidth="112" minHeight="60" xmlns:skins="com.structuredlogs.components.skins.*" xmlns:components="com.structuredlogs.components.*"> 
+
+    <slt:states>
+        <ns:State name="normal"/>            
+        <ns:State name="hovered"/>
+        <ns:State name="selected"/>
+    </slt:states>
+	
+	<!-- layer 2: fill -->
+	<s:Rect left="1" right="1" top="1" bottom="1" radiusX="2" radiusY="2">
+		<s:fill>
+			<ns:LinearGradient rotation="90">
+				<ns:GradientEntry color="0xFFFFFF" color.selected="0xD2D2D2" 
+							   alpha="0.85"
+							   alpha.hovered="0.6" />
+				<ns:GradientEntry color="0xD8D8D8" color.selected="0xBCBCBC"
+							   alpha="0.85"
+							   alpha.hovered="0.6" />
+			</ns:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	
+	<!-- layer 3: fill lowlight -->
+	<s:Rect left="1" right="1" bottom="1" height="9" radiusX="2" radiusY="2">
+		<s:fill>
+			<ns:LinearGradient rotation="90">
+				<ns:GradientEntry color="0x000000" alpha="0.0099"
+							   alpha.hovered="0.02" />
+				<ns:GradientEntry color="0x000000" alpha="0.0627"
+							   alpha.hovered="0.08" />
+			</ns:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	
+<!-- layer 5: highlight stroke (all states except down) -->
+	<s:Rect left="1" right="1" top="1" bottom="1" radiusX="2" radiusY="2">
+		<s:stroke>
+			<ns:LinearGradientStroke rotation="90" weight="1">
+				<ns:GradientEntry color="0xFFFFFF" />
+				<ns:GradientEntry color="0xD8D8D8" />
+			</ns:LinearGradientStroke>
+		</s:stroke>
+	</s:Rect>
+
+	<!-- layer 7: border - put on top of the fill so it doesn't disappear when scale is less than 1 -->
+    <s:Rect left="0" right="0" top="0" bottom="0" width="69" height="20" radiusX="2" radiusY="2">
+        <s:stroke>
+            <ns:LinearGradientStroke rotation="90" weight="1">
+                <ns:GradientEntry color="0x000000" 
+                               alpha="0.5625" />
+                <ns:GradientEntry color="0x000000" 
+                               alpha="0.75"  />
+            </ns:LinearGradientStroke>
+        </s:stroke>
+    </s:Rect>
+    
+	<!-- layer 8: text -->
+	<s:SimpleText id="assertionName" text="Hello"
+		fontWeight="bold"
+	         textAlign="left"
+             verticalAlign="middle"
+             lineBreak="toFit"
+			 left="6" right="6" top="6">
+	</s:SimpleText>
+
+	<components:TestPointDataBox 
+		id="dataBox"
+		assertionTestPoint="{this.data}" 
+		top="28" left="6" right="6" bottom="6" 
+		width="100%" />
+	
+	<s:Button id="dataBoxShrinkButton"
+		label="Up" click="dataBox.hideList()"
+		top="32" right="10" width="12" height="12" />
+</slt:TestPointAssertionRenderer>
