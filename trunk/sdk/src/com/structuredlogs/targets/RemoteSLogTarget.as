@@ -395,13 +395,13 @@ public class RemoteSLogTarget extends LineFormattedTarget
     	if (logHistory.length == 0 || instanceID == null)
     	{
     		if (callback != null)
-    			callback("success no log");
+    			callback("no logs");
     		return;
     	}
     	if (!pendingLog)
     		pendingLog = new Array();
     	
-    	var addArray:Array = logHistory.toArray();
+    	var addArray:Array = logHistory;
     	for (var j:int = 0; j < addArray.length; j++)
     		pendingLog.push(addArray[j]);
     	clearHistory();

@@ -84,7 +84,7 @@ public class SLog
      *  Array of targets that should be searched any time
      *  a new logger is created.
      */
-    private static var targets:Array = [];    
+    protected static var targets:Array = [];    
 	
 	//--------------------------------------------------------------------------
 	//
@@ -316,7 +316,7 @@ public class SLog
 		var json:JSON = new JSON();
 		var msg:String = json.encode(testData);
 		var logger:ILogger = SLog.getLogger(category);
-		trace("test sent: " + msg);
+		
 		logger.log(SLogEventLevel.TESTPOINT, msg);
 	}
 
@@ -344,6 +344,14 @@ public class SLog
 	public static function testResetScripts():void
 	{
 		SLog.test(SLog, StructuredLogCommand.SLOG_RESET_SCRIPTS, {});
+	}
+
+	/**
+	 * 	A specific Structured Log Testing message to let tools know to load a specific script.
+	 */
+	public static function testLoadScript(fileName:String, fileType:String = "local"):void
+	{
+		SLog.test(SLog, StructuredLogCommand.SLOG_LOAD_SCRIPT, {fileName: fileName, fileType: fileType});
 	}	
 	
 	/**
