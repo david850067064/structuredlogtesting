@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+	ADOBE SYSTEMS INCORPORATED
+	Copyright 2008 Adobe Systems Incorporated
+	All Rights Reserved.
+
+	NOTICE: Adobe permits you to use, modify, and distribute this file
+	in accordance with the terms of the license agreement accompanying it.
+
+-->
+
+<!--- The default skin class for a Spark List component. -->
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+	  minHeight="24"
+	  xmlns:ns="library://ns.adobe.com/flex/halo" xmlns:components="com.structuredlogs.components.*"> 
+
+
+    <fx:Metadata>
+    <![CDATA[ 
+	/** 
+	 * A strongly typed property that references the component to which this skin is applied.
+	 */
+    	[HostComponent("com.structuredlogs.components.TestPointDataPartBox")]
+    ]]>
+    </fx:Metadata>
+
+	<fx:Script>
+    	<![CDATA[
+    		import mx.states.State;
+		
+
+		    /**
+		     *  @private
+		     */
+		    override public function set states(value:Array):void
+		    {
+		    	for (var i:int = 0;i < value.length; i++)
+		    	{
+		    	 	var state:State = value[i];
+		    	 	if (state.basedOn)
+		    	 	{
+		    			state.basedOn = state.basedOn.replace(/\"/gi, "");
+		    			value[i] = state;
+		    		}
+		    	}
+		    	super.states = value;
+		    }
+    	]]>
+	</fx:Script>
+
+	<s:states>
+		<ns:State name="default" />
+		<ns:State name="passed" />
+		<ns:State name="failed" />
+		<ns:State name="editMode" />
+		<ns:State name="editModeTypeConstant" basedOn="editMode" />
+		<ns:State name="editModeTypeCustom" basedOn="editMode" />
+	</s:states>
+	
+	<!-- layer 2: fill -->
+	<s:Rect left="1" right="1" top="1" bottom="1" radiusX="0" radiusY="0">
+		<s:fill>
+			<ns:LinearGradient rotation="90">
+				<ns:GradientEntry color="0xFFFFFF" color.passed="0x33CC33" color.failed="0xFF3333"
+							   alpha="0.85" alpha.passed="0.4" alpha.failed="0.4" />
+				<ns:GradientEntry color="0xEFEFEF" color.passed="0x33BC33" color.failed="0xEE3333"
+							   alpha="0.85" alpha.passed="0.4" alpha.failed="0.4" />
+			</ns:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	
+	<!-- layer 3: fill lowlight 
+	<s:Rect left="1" right="1" bottom="1" height="9" radiusX="0" radiusY="0">
+		<s:fill>
+			<ns:LinearGradient rotation="90">
+				<ns:GradientEntry color="0x000000" alpha="0.0099"
+							   alpha.hovered="0.02" />
+				<ns:GradientEntry color="0x000000" alpha="0.0627"
+							   alpha.hovered="0.08" />
+			</ns:LinearGradient>
+		</s:fill>
+	</s:Rect> -->
+	
+<!-- layer 5: highlight stroke (all states except down) 
+	<s:Rect left="1" right="1" top="1" bottom="1" radiusX="0" radiusY="0">
+		<s:stroke>
+			<ns:LinearGradientStroke rotation="90" weight="1">
+				<ns:GradientEntry color="0xFFFFFF" />
+				<ns:GradientEntry color="0xD8D8D8" />
+			</ns:LinearGradientStroke>
+		</s:stroke>
+	</s:Rect> -->
+
+	<!-- layer 7: border - put on top of the fill so it doesn't disappear when scale is less than 1 -->
+    <s:Rect left="0" right="0" top="0" bottom="0" radiusX="0" radiusY="0">
+        <s:stroke>
+            <ns:LinearGradientStroke rotation="90" weight="1">
+                <ns:GradientEntry color="0x000000" 
+                               alpha="0.5625" />
+                <ns:GradientEntry color="0x000000" 
+                               alpha="0.75"  />
+            </ns:LinearGradientStroke>
+        </s:stroke>
+    </s:Rect>
+
+
+	<s:Group id="group" left="0" right="6" top="6" 
+		visible="false" visible.editMode="true"
+		height="24" width="100%"
+		includeInLayout="false" includeInLayout.editMode="true">
+		<s:layout>
+			<s:HorizontalLayout />
+		</s:layout>
+		<s:SimpleText id="editLabelElement"
+			fontWeight="bold"
+			top="0" bottom="0"
+			verticalAlign="middle" />
+		<s:DropDownList id="editTypeDropDown" width="88"
+			requiresSelection="true"  />
+		<!-- MIDDLE STUFF -->
+		<s:TextInput id="editInputValue" width="80" top="4" bottom="4"
+			visible="true" visible.editModeTypeConstant="false" visible.editModeTypeCustom="false"
+			includeInLayout="true" includeInLayout.editModeTypeConstant="false" includeInLayout.editModeTypeCustom="false" />
+		<s:DropDownList id="editConstantDropDown" width="80"
+			requiresSelection="true"
+			visible="false" visible.editModeTypeConstant="true" visible.editModeTypeCustom="false"
+			includeInLayout="false" includeInLayout.editModeTypeConstant="true" includeInLayout.editModeTypeCustom="false" />
+		<components:CustomDataEditor id="editCustomEditor" width="100%" top="4" bottom="4"
+			visible="false" visible.editModeTypeConstant="false" visible.editModeTypeCustom="true"
+			includeInLayout="false" includeInLayout.editModeTypeConstant="false" includeInLayout.editModeTypeCustom="true" />
+		
+		<ns:Spacer width="100%" />
+		<s:Button id="saveButton" label="Save" 
+			width="50" top="4" bottom="4"
+			click="hostComponent.closeDataEdit(true)" />
+	</s:Group>
+    
+    <s:Group left="3" right="3" top="4" top.editMode="{group.height+10}" bottom="6">
+		<!-- layer 8: text -->
+		<s:SimpleText id="labelElement"
+		         textAlign="left"
+	             verticalAlign="middle"
+	             lineBreak="toFit"
+				 left="5" right="2" verticalCenter="0">
+		</s:SimpleText>
+		
+		<s:Button id="editButton"
+			label="Up" click="hostComponent.setEditMode()"
+			right="6" width="12" height="12" verticalCenter="0" />
+	</s:Group>
+</s:SparkSkin>

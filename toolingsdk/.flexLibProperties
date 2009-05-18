@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+<includeClasses>
+<classEntry path="com.structuredlogs.components.CustomDataEditor"/>
+<classEntry path="com.structuredlogs.components.ITestPointAssertion"/>
+<classEntry path="com.structuredlogs.components.TestPointAssertion"/>
+<classEntry path="com.structuredlogs.components.TestPointDataBox"/>
+<classEntry path="com.structuredlogs.components.TestPointDataPartBox"/>
+<classEntry path="com.structuredlogs.components.TestPointScriptBox"/>
+<classEntry path="com.structuredlogs.components.TestPointSelectionBox"/>
+<classEntry path="com.structuredlogs.components.skins.CustomDataEditorSkin"/>
+<classEntry path="com.structuredlogs.components.skins.DataBox"/>
+<classEntry path="com.structuredlogs.components.skins.DataPartBox"/>
+<classEntry path="com.structuredlogs.components.skins.DefaultTestPointAssertionRenderer"/>
+<classEntry path="com.structuredlogs.components.skins.ScriptBox"/>
+<classEntry path="com.structuredlogs.components.skins.SelectionBox"/>
+<classEntry path="com.structuredlogs.components.supportClasses.IHostBox"/>
+<classEntry path="com.structuredlogs.components.supportClasses.TestPointAssertionRenderer"/>
+<classEntry path="com.structuredlogs.utils.SparkDragHelper"/>
+</includeClasses>
+<includeResources/>
+<namespaceManifests>
+<namespaceManifestEntry manifest="Manifest.xml" namespace="http://structuredlogs.com/toolingsdk/"/>
+</namespaceManifests>
+</flexLibProperties>

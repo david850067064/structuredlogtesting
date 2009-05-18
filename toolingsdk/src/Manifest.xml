@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!-- Manifest.xml -->
+<componentPackage>
+	<component id="CustomDataEditorSkin" class="com.structuredlogs.components.skins.CustomDataEditorSkin"/>
+	<component id="DataBox" class="com.structuredlogs.components.skins.DataPartBox"/>
+	<component id="DataPartBox" class="com.structuredlogs.components.skins.DataBox"/>
+	<component id="DefaultTestPointAssertionRenderer" class="com.structuredlogs.components.skins.DefaultTestPointAssertionRenderer"/>
+    <component id="TestPointAssertionRenderer" class="com.structuredlogs.components.supportClasses.TestPointAssertionRenderer"/>
+    <component id="CustomDataEditor" class="com.structuredlogs.components.CustomDataEditor"/>
+    <component id="ITestPointAssertion" class="com.structuredlogs.components.ITestPointAssertion"/>
+    <component id="TestPointAssertion" class="com.structuredlogs.components.TestPointAssertion"/>
+    <component id="TestPointDataBox" class="com.structuredlogs.components.TestPointDataBox"/>
+    <component id="TestPointDataPartBox" class="com.structuredlogs.components.TestPointDataPartBox"/>
+    <component id="TestPointScriptBox" class="com.structuredlogs.components.TestPointScriptBox"/>
+    <component id="TestPointSelectionBox" class="com.structuredlogs.components.TestPointSelectionBox"/>
+</componentPackage>
