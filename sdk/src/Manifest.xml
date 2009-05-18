@@ -5,10 +5,16 @@
     <component id="SLogLogger" class="com.structuredlogs.SLogLogger"/>
     <component id="SLogLocalConnection" class="com.structuredlogs.connection.SLogLocalConnection"/>
 	<component id="StructuredLog" class="com.structuredlogs.data.StructuredLog"/>
+    <component id="TestPointDataPart" class="com.structuredlogs.data.TestPointDataPart"/>
     <component id="TestPoint" class="com.structuredlogs.data.TestPoint"/>
+    <component id="TestPointScript" class="com.structuredlogs.data.TestPointScript"/>
+    <component id="ITestDriver" class="com.structuredlogs.drivers.ITestDriver"/>
+    <component id="TestDriver" class="com.structuredlogs.drivers.TestDriver"/>
     <component id="LogHandlerEvent" class="com.structuredlogs.events.LogHandlerEvent"/>
     <component id="SLogEvent" class="com.structuredlogs.events.SLogEvent"/>
     <component id="SLogEventLevel" class="com.structuredlogs.events.SLogEventLevel"/>
+    <component id="TestPointEvent" class="com.structuredlogs.events.TestPointEvent"/>
+    <component id="SLogTestRunner" class="com.structuredlogs.runners.SLogTestRunner"/>
     <component id="BaseTarget" class="com.structuredlogs.targets.BaseTarget"/>
     <component id="FileTarget" class="com.structuredlogs.targets.FileTarget"/>
     <component id="LineFormattedTarget" class="com.structuredlogs.targets.LineFormattedTarget"/>

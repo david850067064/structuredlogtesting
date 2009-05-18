@@ -257,7 +257,8 @@ public class BaseTarget implements ILoggingTarget, IMXMLObject
      */
     public function addLogger(logger:ILogger):void
     {
-        if (logger)
+        if (logger
+        	&& !logger.hasEventListener(SLogEvent.LOG))
         {
             _loggerCount++;
             logger.addEventListener(SLogEvent.LOG, logHandler);
