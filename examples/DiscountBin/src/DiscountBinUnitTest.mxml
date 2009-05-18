@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:flexUnitUIRunner="http://www.adobe.com/2009/flexUnitUIRunner" 
+	creationComplete="runMe()" 
+	styleName="flexUnitApplication" xmlns:structuredlogs="http://structuredlogs.com/sdk/">
+	
+	<!--<structuredlogs:StructuredLogTarget identifier="DiscountBinNew" />-->
+	
+	<mx:Script>
+		<![CDATA[
+			import unittest.TestDiscountBin;
+			import org.flexunit.runner.FlexUnitCore;
+			import org.flexunit.listeners.UIListener;
+			
+			private var core:FlexUnitCore;
+
+			public function runMe():void
+			{
+				//SLog.testResetScripts();
+				core = new FlexUnitCore();
+				//Listener for the UI
+				core.addListener( new UIListener( uiListener ));
+				core.run( TestDiscountBin );
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Style source="css/FlexUnitComponents.css" />
+	
+	<flexUnitUIRunner:TestRunnerBase id="uiListener" 
+		width="100%" height="100%" />	
+</mx:Application>

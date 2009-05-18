@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:structuredlogs="http://structuredlogs.com/sdk/"
+	creationComplete="setup()"
+	layout="vertical" horizontalCenter="0" >
+	<!-- NOTES: PART 2 Targets -->
+	
+	<structuredlogs:StructuredLogTarget identifier="DiscountBin" />
+	<structuredlogs:LogHistoryTarget id="targetHistory" />
+	<structuredlogs:RemoteSLogTarget id="targetRemote" identifier="RemoteTarget" 
+		captureURL="http://voice/rialogger/remote/" />
+	
+	
+	<mx:Script>
+		<![CDATA[
+			import com.structuredlogs.data.StructuredLogCommand;
+			import classes.Discounter;
+			
+			private var total:Number = 100;
+			private var discount:Discounter;
+			
+			public function setup():void
+			{
+				SLog.testResetScripts();
+				SLog.testLoadScript("/Users/renaun/Documents/workspaces/LoggerStuff/STL_examples/DiscountBin/src/unittest/scripts/test2.slf")
+				
+				discount = new Discounter(total);
+			}
+			private function statusUpdate(message:String, length:int = 0):void
+			{
+				if (message == RemoteSLogTarget.PROGRESS)
+					output.text += length + " pending log items left.\n";
+				else
+					output.text += message + "\n";
+			}
+		]]>
+	</mx:Script>
+	<mx:HBox>
+		<mx:TextInput id="promoText" text="DIS10" />
+		<mx:Button label="Apply Promo" click="discount.applyPromo(promoText.text);output.text = targetHistory.toString()" />
+	</mx:HBox>
+	<mx:HBox>
+		<mx:Label id="totalPrice" />
+		<mx:Button label="Update Price" click="totalPrice.text = '$' + discount.calculatePrice();" />
+	</mx:HBox>
+	<mx:HBox>
+		<mx:TextInput id="txtBug" />
+		<mx:Button label="Send Remote Log" click="targetRemote.note = txtBug.text;targetRemote.sendLog(statusUpdate)" />
+		<mx:Button label="Display Log History" click="output.text = targetHistory.toString()" />
+	</mx:HBox>
+	<mx:TextArea id="output" width="100%" height="100%" />
+	
+</mx:Application>
