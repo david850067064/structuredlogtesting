@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+<includeClasses>
+<classEntry path="SLog"/>
+<classEntry path="com.structuredlogs.SLogLogger"/>
+<classEntry path="com.structuredlogs.connection.SLogLocalConnection"/>
+<classEntry path="com.structuredlogs.data.StructuredLog"/>
+<classEntry path="com.structuredlogs.data.StructuredLogCommand"/>
+<classEntry path="com.structuredlogs.data.TestPoint"/>
+<classEntry path="com.structuredlogs.data.TestPointDataPart"/>
+<classEntry path="com.structuredlogs.data.TestPointScript"/>
+<classEntry path="com.structuredlogs.drivers.ITestDriver"/>
+<classEntry path="com.structuredlogs.drivers.TestDriver"/>
+<classEntry path="com.structuredlogs.events.LogHandlerEvent"/>
+<classEntry path="com.structuredlogs.events.SLogEvent"/>
+<classEntry path="com.structuredlogs.events.SLogEventLevel"/>
+<classEntry path="com.structuredlogs.events.TestPointEvent"/>
+<classEntry path="com.structuredlogs.runners.SLogTestRunner"/>
+<classEntry path="com.structuredlogs.targets.BaseTarget"/>
+<classEntry path="com.structuredlogs.targets.FileTarget"/>
+<classEntry path="com.structuredlogs.targets.LineFormattedTarget"/>
+<classEntry path="com.structuredlogs.targets.LogHistoryTarget"/>
+<classEntry path="com.structuredlogs.targets.RemoteSLogTarget"/>
+<classEntry path="com.structuredlogs.targets.StructuredLogTarget"/>
+<classEntry path="com.structuredlogs.targets.TraceTarget"/>
+<classEntry path="com.structuredlogs.utils.JSON"/>
+<classEntry path="mx.core.IMXMLObject"/>
+<classEntry path="mx.logging.ILogger"/>
+<classEntry path="mx.logging.ILoggingTarget"/>
+</includeClasses>
+<includeResources/>
+<namespaceManifests>
+<namespaceManifestEntry manifest="Manifest.xml" namespace="http://structuredlogs.com/sdk/"/>
+</namespaceManifests>
+</flexLibProperties>
