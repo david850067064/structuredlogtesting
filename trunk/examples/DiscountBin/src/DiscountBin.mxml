@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:structuredlogs="http://structuredlogs.com/sdk/"
+	creationComplete="setup()"
+	layout="vertical" horizontalCenter="0" >
+	<!-- NOTES: PART 1 - Steps 1-5 -->
+	
+	<!-- STEP 2: Setup target to send out SLogConnection application -->
+	<structuredlogs:StructuredLogTarget identifier="DiscountBin" />
+	
+	
+	<mx:Script>
+		<![CDATA[
+			import classes.Discounter;
+			
+			private var total:Number = 100;
+			private var discount:Discounter;
+			
+			public function setup():void
+			{
+				/* STEP 5: Reseting Logs */
+				SLog.testResetScripts();
+				
+				discount = new Discounter(total);
+			}
+		]]>
+	</mx:Script>
+	<!-- STEP 3: Apply discount code -->
+	<mx:HBox>
+		<mx:TextInput id="promoText" text="DIS10" />
+		<mx:Button label="Apply Promo" click="discount.applyPromo(promoText.text);" />
+	</mx:HBox>
+	<!-- STEP 4: Update Cart Price -->
+	<mx:HBox>
+		<mx:Label id="totalPrice" />
+		<mx:Button label="Update Price" click="totalPrice.text = '$' + discount.calculatePrice();" />
+	</mx:HBox>
+	
+</mx:Application>
