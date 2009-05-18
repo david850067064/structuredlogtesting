@@ -24,6 +24,7 @@ package
 {
 
 import com.structuredlogs.SLogLogger;
+import com.structuredlogs.data.StructuredLogCommand;
 import com.structuredlogs.events.SLogEventLevel;
 import com.structuredlogs.utils.JSON;
 
@@ -65,21 +66,6 @@ public class SLog
 	//  Constants
 	//
 	//--------------------------------------------------------------------------	
-	
-	/**
-	 * 	Command to tell SLog to reset TestPoint scripts.
-	 */
-	public static const TESTPOINT_RESET:String = "testResetScripts";
-	
-	/**
-	 * 	Command to tell SLog to reset TestPoint scripts.
-	 */
-	public static const TESTPOINT_LOAD_SCRIPT:String = "loadTestPointScript";
-	
-	/**
-	 * 	Command to tell SLog to reset TestPoint scripts.
-	 */
-	public static const TESTPOINT_ACTIVATE_SCRIPT:String = "activateTestPointScript";
 
 	//--------------------------------------------------------------------------
 	//
@@ -330,7 +316,7 @@ public class SLog
 		var json:JSON = new JSON();
 		var msg:String = json.encode(testData);
 		var logger:ILogger = SLog.getLogger(category);
-
+		trace("test sent: " + msg);
 		logger.log(SLogEventLevel.TESTPOINT, msg);
 	}
 
@@ -348,7 +334,16 @@ public class SLog
 	 */
 	public static function testActivateScript(scriptName:String, activate:Boolean):void
 	{
-		SLog.test(SLog, SLog.TESTPOINT_ACTIVATE_SCRIPT, {scriptName:scriptName, activate: activate});
+		SLog.test(SLog, StructuredLogCommand.SLOG_ACTIVATE_SCRIPT, {scriptName:scriptName, activate: activate});
+	}
+
+	/**
+	 * 	A specific Structured Log Testing message to let tools know to that the specific
+	 *  script should be clear their data.
+	 */
+	public static function testResetScripts():void
+	{
+		SLog.test(SLog, StructuredLogCommand.SLOG_RESET_SCRIPTS, {});
 	}	
 	
 	/**
@@ -449,6 +444,12 @@ public class SLog
     {
         if (target)
         {
+        	// Check to see if its present first, if so just leave method
+        	for each(var dupTarget:ILoggingTarget in targets)
+        	{
+        		if (dupTarget == target)
+        			return;
+        	}
             var filters:Array = target.filters;
             var logger:ILogger;
             // need to find what filters this target matches and set the specified

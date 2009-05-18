@@ -21,44 +21,38 @@ THE SOFTWARE.
 
 */
 
-package com.structuredlogs.data
+package com.structuredlogs.drivers
 {
-/**
- * 	The class holds constant values determined by Structured Log Testing to
- *  be common command strings for tools to standarized around.
- * 
- * 	This command values should be set as the TestPoint name (tpname) of a SLog statment.
- */
-public class StructuredLogCommand
-{
-	//--------------------------------------------------------------------------
-	//
-	//  Constants
-	//
-	//--------------------------------------------------------------------------	
 	
-	/**
-	 * 	Reset any scripts.  Possible data payloads:
-	 * 	{ scriptNames: "scriptName1,scriptName2" }
-	 * 
-	 *  The scriptNames property hold a comma delimited list of script names to reset.
-	 */
-	public static const SLOG_RESET_SCRIPTS:String = "slog_Reset_Scripts";
-	
-	/**
-	 * 	Load a script as a url or local file.
-	 * 	{ fileType: "url" | null,
-	 * 	  fileName: "path/to/file" }
-	 * 
-	 */
-	public static const SLOG_LOAD_SCRIPT:String = "slog_Load_Script";
-	
-	/**
-	 * 	Activate a TestPointScript in the TestDriver to check assertions against incoming StructuredLog data.
-	 * 	{scriptName:scriptName, activate: activate}
-	 * 
-	 */
-	public static const SLOG_ACTIVATE_SCRIPT:String = "slog_Activate_Script";
+import com.structuredlogs.data.TestPointScript;
 
+/**
+ * 	Interface for classes that are passed into an instance of the TestDriver class.
+ */
+public interface ITestDriver
+{
+	/**
+	 *  Method is called when the <code>TestDriver</code> loads a Structured Log File (.slf) 
+	 * 	and creates the <code>TestPointScript</code>.
+	 */
+	function scriptCreatedHandler(script:TestPointScript):void
+	
+	/**
+	 *  Method is called when the <code>TestDriver</code> encounters an error loading a 
+	 * 	Structured Log File (.slf) containing a TestPoint script.
+	 */
+	function scriptErrorHandler(scriptName:String, message:String = ""):void
+	
+	/**
+	 *  Method is called when the <code>TestDriver</code> encounters a <code>TestPointScript</code>
+	 *  that is finished comparing all the assertions.
+	 */
+	function scriptFinishedHandler(script:TestPointScript):void
+	
+	/**
+	 *  Method is called when the <code>TestDriver</code> has finished loading all
+	 *  the Structured Log File (.slf) containing a TestPoint scripts.
+	 */
+	function driverReady():void
 }
 }

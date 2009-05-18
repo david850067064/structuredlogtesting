@@ -614,6 +614,13 @@ public class JSON
 			    return false;
 			}	        
 			break;
+	        case 'n':
+			if (next() == 'u' && next() == 'l' &&
+			        next() == 'l') {
+			    next();
+			    return false;
+			}	        
+			break;
 	        default:
 	            return null;
 	    }
