@@ -1,0 +1,4 @@
+{"description":"","name":"demo","identifier":"slt145ahget4"}
+{"tpname":"originalPrice","tpcat":"classes.Discounter","price":100,"tpdesc":"","tpuid":"tp145ahgqej"}
+{"tpname":"subTotal","tpcat":"classes.Discounter","code":"DIS10","tpdesc":"","tpuid":"tp145ahgt3m","currentPrice":90}
+{"tpname":"discountCode","tpcat":"classes.Discounter","code":"DIS10","tpdesc":"","tpuid":"tp145ahgrpi"}

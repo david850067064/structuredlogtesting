@@ -3,6 +3,8 @@
 	xmlns:structuredlogs="http://structuredlogs.com/sdk/"
 	creationComplete="setup()"
 	layout="vertical" horizontalCenter="0" >
+	
+	<mx:Style source="default.css" />
 	<!-- NOTES: PART 1 - Steps 1-5 -->
 	
 	<!-- STEP 2: Setup target to send out SLogConnection application -->
@@ -28,12 +30,15 @@
 	<!-- STEP 3: Apply discount code -->
 	<mx:HBox>
 		<mx:TextInput id="promoText" text="DIS10" />
-		<mx:Button label="Apply Promo" click="discount.applyPromo(promoText.text);" />
+		<mx:Button label="Apply Promo" 
+			click="discount.applyPromo(promoText.text);" />
 	</mx:HBox>
+	
 	<!-- STEP 4: Update Cart Price -->
 	<mx:HBox>
-		<mx:Label id="totalPrice" />
-		<mx:Button label="Update Price" click="totalPrice.text = '$' + discount.calculatePrice();" />
+		<mx:Label id="totalPrice" text="Total: $0"/>
+		<mx:Button label="Update Price" 
+			click="totalPrice.text = 'Total: $' + discount.calculatePrice();" />
 	</mx:HBox>
 	
 </mx:Application>

@@ -51,7 +51,9 @@ public class Discounter
 		codes.push(code);
 	}
 	
-	/* STEP 4: Setup subTotal price data points */
+	
+	/* STEP 4: Setup subTotal price data points 
+	*/
 	public function calculatePrice():Number
 	{
 		var price:Number = originalPrice;
@@ -63,13 +65,12 @@ public class Discounter
 			}
 			else if (code == "360FLEX")
 			{
-				price = price * 0.80;
+				price = originalPrice * 0.80;
 			}
 			SLog.test(Discounter, "subTotal", {currentPrice: price, code: code});
 		}
 		return price;
 	}
-	
 
 }
 }

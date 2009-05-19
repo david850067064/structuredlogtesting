@@ -1,0 +1,13 @@
+/* CSS file */
+Application 
+{
+	background-color: #334455;
+	color: #FFFFFF;
+	font-size: 13;
+}
+
+TextArea, TextInput
+{
+	background-color: #DDDDDD;	
+	color: #000000;
+}
