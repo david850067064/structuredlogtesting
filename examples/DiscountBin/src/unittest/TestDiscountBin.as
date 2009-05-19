@@ -41,22 +41,18 @@ public class TestDiscountBin
 	private var runner:SLogTestRunner;
 	
 	[SLF]
-	public static var promo1:String = "unittest/scripts/test2.slf";
-	
-	//[SLF]
-	//public static var price2:String = "unittest/scripts/price2.slf";
+	public static var promo1:String = "unittest/scripts/demo.slf";
 	
 	[TestDriver]
 	public function goneShopping():void
 	{	    
 		
-		SLog.testActivateScript("test2", true);
+		SLog.testActivateScript("demo", true);
 		var discount:Discounter = new Discounter(80.00);
 		discount.applyPromo("DIS10");
 		discount.calculatePrice();
-		SLog.testActivateScript("test2", false);
+		SLog.testActivateScript("demo", false);
 	}
 	
 }
-
 }
