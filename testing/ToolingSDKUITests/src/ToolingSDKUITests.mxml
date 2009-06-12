@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:ns="library://ns.adobe.com/flex/spark"
+	layout="vertical"
+	initialize="init();" xmlns:structuredlogs="http://structuredlogs.com/toolingsdk/" >
+	<mx:Script>
+		<![CDATA[
+			import com.structuredlogs.components.TestPointAssertion;
+			import com.structuredlogs.data.TestPoint;
+			import mx.collections.ArrayCollection;
+			[Bindable]
+			private var dataItems:ArrayCollection = new ArrayCollection();
+			
+			private function init():void
+			{
+				for (var i:int = 0; i < 10;i++)
+				{
+					var str2:String = (i%2 == 1) ? "" : '"nextPrice":'+(i*10)+',"sale":true,';
+					var str:String = '{"price":'+(i*20)+','+str2+'"discount":0.20,"tpdesc":"","tpuid":"","tpname":"item'+i+'","tpcat":"classes.Discounter"}';
+					if (i == 0)
+						str = '{"tpcat":"classes.Discounter","tpdesc":"","tpuid":"","price":{"tpop":"minus","params":[{"params":[{"tpuid":"ab5fc99073b7134935724dec11995611","tpname":"originalPrice","tpkey":"price"}],"tpop":"linked","tptype":"slt"},10],"tptype":"slt"},"tpname":"price"}';
+					
+					var testAssertion:TestPointAssertion = new TestPointAssertion();
+					testAssertion.parseTestPoint(TestPoint.parseMessage(str));
+					dataItems.addItem(testAssertion);
+				}
+			}
+			private function checkAssertions():void
+			{
+				scriptBox.clearData();
+				for (var i:int = 0; i < 2;i++)
+				{
+					var str2:String = (i%2 == 1) ? "" : '"nextPrice":'+(i*10)+',"sale":true,';
+					var str:String = '{"price":'+(i*21)+','+str2+'"discount":0.20,"tpdesc":"","tpuid":"","tpname":"item'+i+'","tpcat":"classes.Discounter"}';
+					scriptBox.checkAssertion(TestPoint.parseMessage(str));
+				}
+			}
+		]]>
+	</mx:Script>
+	<!--<ns:List dataProvider="{dataItems}" height="200" baseColor="0xff0000" contentBackgroundColor="0xAA3300" />-->
+	<mx:Button label="Save Mode" click="scriptBox.saveScriptMode()" />
+	<mx:Button label="Send Test Assertions" click="checkAssertions()" />
+	<mx:HBox>
+		<structuredlogs:TestPointSelectionBox
+			label="Available Assertions"
+			width="140" height="200"
+			assertions="{dataItems}" />
+		<structuredlogs:TestPointScriptBox
+			id="scriptBox"
+			width="540" height="400" />
+	</mx:HBox>
+</mx:Application>
