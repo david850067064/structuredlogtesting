@@ -450,10 +450,10 @@ public class TestPointScriptBox extends SkinnableComponent
             var item:IItemRenderer;
             var currentItem:IItemRenderer;
             var lastItem:UIComponent;
-            //var pt:Point = new Point(event.localX, event.localY);
-            var pt:Point = new Point(assertionList.dataGroup.contentMouseX, assertionList.dataGroup.contentMouseY);
+            var pt:Point = new Point(event.localX, event.localY);
+            //var pt:Point = new Point(assertionList.dataGroup.contentMouseX, assertionList.dataGroup.contentMouseY);
             pt = DisplayObject(event.target).localToGlobal(pt);
-            pt = this.parentApplication.globalToLocal(pt);
+            pt = this.document.globalToLocal(pt);
 
             var rc:int = assertionList.dataGroup.numElements;
             for (var i:int = 0; i < rc; i++)
@@ -463,10 +463,11 @@ public class TestPointScriptBox extends SkinnableComponent
                     lastItem = currentItem as UIComponent;
                 else
                 	continue;
+                
 	            var pt2:Point = new Point(lastItem.x, lastItem.y);
 	            pt2 = DisplayObject(event.target).localToGlobal(pt2);
-	            pt2 = this.parentApplication.globalToLocal(pt2);
-
+	            pt2 = this.document.globalToLocal(pt2);
+				
                 if (pt2.y <= pt.y + (lastItem.height/2) && pt.y + (lastItem.height/2) < pt2.y + lastItem.height)
                 {
                     //item = lastItem;
@@ -476,7 +477,6 @@ public class TestPointScriptBox extends SkinnableComponent
             }
 
         }
-
         return lastDropIndex;
     }
     
