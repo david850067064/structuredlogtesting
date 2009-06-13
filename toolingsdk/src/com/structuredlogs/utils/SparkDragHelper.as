@@ -174,7 +174,7 @@ public class SparkDragHelper
         	|| !isPresseds[comp]
         	|| !mouseDownPoints[comp])
         	return;
-        trace("MOUSEMOVE: " + event.target + "\nCurrent: " + event.currentTarget);
+        //trace("MOUSEMOVE: " + event.target + "\nCurrent: " + event.currentTarget);
 		var pt:Point = new Point(event.localX, event.localY);
         pt = DisplayObject(comp).localToGlobal(pt);
         pt = globalApplication.globalToLocal(pt);

@@ -270,10 +270,14 @@ public class TestPointScriptBox extends SkinnableComponent
 	 */
 	public function addAssertion(assertion:ITestPointAssertion, index:int = -1):void
 	{
-		if (assertion.getTestPoint().tpuid == "")
-			assertion.getTestPoint().tpuid = "tp" + (new Date()).getTime().toString(32);
-		assertion.scriptBox = this;
-		assertionList.dataProvider.addItemAt(assertion, (index > -1) ? index : assertionList.dataProvider.length);
+		var newAssertion:TestPointAssertion = new TestPointAssertion();
+		newAssertion.parseTestPoint(assertion.getTestPoint());
+		if (newAssertion.getTestPoint().tpuid == "")
+		{
+			newAssertion.getTestPoint().tpuid = "tp" + (new Date()).getTime().toString(32);
+		}
+		newAssertion.scriptBox = this;
+		assertionList.dataProvider.addItemAt(newAssertion, (index > -1) ? index : assertionList.dataProvider.length);
 		clearData();
 	}
     
