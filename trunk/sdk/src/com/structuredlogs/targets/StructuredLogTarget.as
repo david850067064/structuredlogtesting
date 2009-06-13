@@ -91,7 +91,7 @@ public class StructuredLogTarget extends BaseTarget
 	/**
 	 * 	@private
 	 */
-	private var messages:Array = new Array();
+	private var messageBytes:ByteArray = new ByteArray();
 	
 	/**
 	 * 	@private
@@ -170,12 +170,15 @@ public class StructuredLogTarget extends BaseTarget
     	logObject.message = event.message;
     	logObject.identifier = identifier;
 		
-		var messageBytes:ByteArray = new ByteArray();
+		//var messageBytes:ByteArray = new ByteArray();
 		messageBytes.writeObject(logObject);
-		currentMessageByteCount += messageBytes.length;
+		//currentMessageByteCount += messageBytes.length;
 
 		lastMessageTime = getTimer();
-		messages.push(logObject);
+		// This is keeping the objects arround... need to not store in array
+		// Also maybe use on instance of StructuredLog() and just overwrite and write to
+		// bytes to save on memory
+		//messages.push(logObject);
 		send();
 		if (!timer.running)
 			timer.start();
@@ -202,15 +205,13 @@ public class StructuredLogTarget extends BaseTarget
     			eventFlag = false;
     		}
     		
-    		if (currentMessageByteCount > 30000 || eventFlag)
+    		if (messageBytes.length > 30000 || eventFlag)
     		{
-    			currentMessageByteCount = 0;
-    			
-    			var messageBytes:ByteArray = new ByteArray();
-    			messageBytes.writeObject(messages);
+    			//var messageBytes:ByteArray = new ByteArray();
+    			//messageBytes.writeObject(messages);
     			
 	    		lc.send(connection, method, messageBytes, identifier);
-	    		messages = new Array();
+	    		messageBytes.clear();
 	    	}
 	    }
 	    catch (error:Error) 
