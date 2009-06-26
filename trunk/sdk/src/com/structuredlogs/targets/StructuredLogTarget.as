@@ -27,14 +27,15 @@ import com.structuredlogs.data.StructuredLog;
 import com.structuredlogs.events.SLogEvent;
 import com.structuredlogs.events.SLogEventLevel;
 
+import mx.logging.ILogger;
+
 import flash.events.StatusEvent;
 import flash.events.TimerEvent;
 import flash.net.LocalConnection;
 import flash.utils.ByteArray;
+import flash.utils.Endian;
 import flash.utils.Timer;
 import flash.utils.getTimer;
-
-import mx.logging.ILogger;
 
 /**
  *  The StructuredLogTarget sends messages containing an AMF representation of an Array
@@ -63,6 +64,8 @@ public class StructuredLogTarget extends BaseTarget
         _identifier = "default";
         
         timer.addEventListener(TimerEvent.TIMER_COMPLETE, send);
+        
+        messageBytes = new ByteArray();
     }
     
 	//--------------------------------------------------------------------------
@@ -91,7 +94,7 @@ public class StructuredLogTarget extends BaseTarget
 	/**
 	 * 	@private
 	 */
-	private var messageBytes:ByteArray = new ByteArray();
+	private var messageBytes:ByteArray;
 	
 	/**
 	 * 	@private
@@ -207,11 +210,9 @@ public class StructuredLogTarget extends BaseTarget
     		
     		if (messageBytes.length > 30000 || eventFlag)
     		{
-    			//var messageBytes:ByteArray = new ByteArray();
-    			//messageBytes.writeObject(messages);
-    			
 	    		lc.send(connection, method, messageBytes, identifier);
-	    		messageBytes.clear();
+	    		messageBytes.position = 0;
+	    		messageBytes.length = 0;
 	    	}
 	    }
 	    catch (error:Error) 
