@@ -127,7 +127,25 @@ public class SLogLocalConnection extends EventDispatcher
 	 */
     public function logHandler(message:ByteArray, identifier:String):void
     { 
-    	dispatchEvent(new LogHandlerEvent(message.readObject(), identifier));
+    	if (!(message is ByteArray))
+    	{
+    		
+    		trace("logHandler: " + message.toString() + " - " + (message as ByteArray));
+    		return;
+    	}
+    	var messagesArray:Array = new Array();
+    	while (message.bytesAvailable)
+    	{
+    		var obj:Object = message.readObject();
+    		if (obj is Array)
+    		{
+    			messagesArray = obj as Array;
+    			break;
+    		}
+    		else
+    			messagesArray.push(obj);
+    	}    	
+    	dispatchEvent(new LogHandlerEvent(messagesArray, identifier));
     }
     
 }
